@@ -44,7 +44,7 @@ story_location: _bmad-output/implementation-artifacts
 development_status:
   # ─── Epic 1: Runnable Game Shell ───────────────────────────────────────────
   epic-1: in-progress
-  1-1-project-scaffold-build-pipeline: ready-for-dev
+  1-1-project-scaffold-build-pipeline: review
   1-2-game-state-schema: backlog
   1-3-content-package-resource-narrative-definitions: backlog
   1-4-resource-tick-engine: backlog

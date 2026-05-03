@@ -3,7 +3,11 @@ package main
 import (
 	"flag"
 	"fmt"
+	"log"
 	"os"
+
+	"github.com/12jihan/afk-x/internal/ui"
+	tea "github.com/charmbracelet/bubbletea"
 )
 
 var version = "0.1.0-dev"
@@ -17,6 +21,9 @@ func main() {
 		os.Exit(0)
 	}
 
-	// Placeholder — Story 1.5 will replace this with tea.NewProgram(...)
-	fmt.Println("afk-x: TUI not yet initialized")
+	p := tea.NewProgram(ui.New(), tea.WithAltScreen())
+	if _, err := p.Run(); err != nil {
+		log.Printf("afk-x: %v", err)
+		os.Exit(1)
+	}
 }

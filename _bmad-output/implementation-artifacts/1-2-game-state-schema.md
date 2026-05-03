@@ -1,6 +1,6 @@
 # Story 1.2: Game State Schema
 
-Status: review
+Status: done
 
 ## Story
 
@@ -30,6 +30,17 @@ so that all packages share a consistent, versioned data contract.
   - [x] `TestJSONRoundTrip` — populate every field, marshal to JSON, unmarshal into new struct, deep-compare all fields
   - [x] `TestPendingDraftNullWhenNil` — marshal `RunState{PendingDraft: nil}` → JSON must contain `"pending_draft":null`, NOT `"pending_draft":[]`
   - [x] `TestResourcesMapType` — verify `Resources` is `map[string]float64`; populate with string keys matching planned content constants (`"cpu_cycles"`, `"memory_shards"`, `"process_threads"`) and verify round-trip
+
+### Review Findings (AI)
+
+- [x] [Review][Patch] Round-trip test verifies slice/map lengths only — add element-value assertions for `ActivePerks`, `ComboQueue` inner elements, `BestCombos` map values, `PendingDraft`, and `UnlockedPerks` [internal/game/state_test.go — TestJSONRoundTrip]
+- [x] [Review][Patch] Missing null-serialization tests for `ComboQueue`, `ActivePerks`, `PermanentUnlocks`, `UnlockedPerks` — only `PendingDraft` has a `TestPendingDraftNullWhenNil`; add equivalent assertions for the other nil slice fields [internal/game/state_test.go]
+- [x] [Review][Patch] `TestSavedAtRFC3339` only checks for a date substring (`"2026-05-03"`) rather than validating RFC3339 format — use `time.Parse(time.RFC3339Nano, ...)` on the extracted value [internal/game/state_test.go — TestSavedAtRFC3339]
+- [x] [Review][Defer] Update `TestResourcesMapType` and `TestJSONRoundTrip` to use `content` package resource key constants instead of string literals — blocked until Story 1.3 defines the constants [internal/game/state_test.go] — deferred, pre-existing
+- [x] [Review][Defer] `PendingDraft` nil invariant has no type-level enforcement (no custom `MarshalJSON`) — current test coverage is sufficient for MVP; revisit if schema complexity grows — deferred, pre-existing
+- [x] [Review][Defer] Resources zero-value key ambiguity (`"cpu_cycles":0.0` vs absent key) not tested or documented — game design question, defer to engine layer — deferred, pre-existing
+- [x] [Review][Defer] Version schema mismatch detection (e.g. loading `"version":99`) has no tested enforcement path — belongs in the `save` package (Story 5.x), not `game` — deferred, pre-existing
+- [x] [Review][Defer] Float precision edge cases (`1.1`, `0.3`, near `math.MaxFloat64`) not exercised in resource round-trip tests — theoretical for this game's value ranges; defer — deferred, pre-existing
 
 ## Dev Notes
 

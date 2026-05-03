@@ -1,5 +1,6 @@
 # Binaries
 bin/
+/afk-x
 *.exe
 *.exe~
 *.dll

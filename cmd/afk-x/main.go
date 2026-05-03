@@ -3,10 +3,11 @@ package main
 import (
 	"flag"
 	"fmt"
+	"log"
 	"os"
 
-	tea "github.com/charmbracelet/bubbletea"
 	"github.com/12jihan/afk-x/internal/ui"
+	tea "github.com/charmbracelet/bubbletea"
 )
 
 var version = "0.1.0-dev"
@@ -22,7 +23,7 @@ func main() {
 
 	p := tea.NewProgram(ui.New(), tea.WithAltScreen())
 	if _, err := p.Run(); err != nil {
-		fmt.Fprintf(os.Stderr, "afk-x: %v\n", err)
+		log.Printf("afk-x: %v", err)
 		os.Exit(1)
 	}
 }

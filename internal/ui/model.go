@@ -4,9 +4,9 @@ import (
 	"time"
 
 	"charm.land/bubbles/v2/textinput"
-	tea "github.com/charmbracelet/bubbletea"
 	"github.com/12jihan/afk-x/internal/engine"
 	"github.com/12jihan/afk-x/internal/game"
+	tea "github.com/charmbracelet/bubbletea"
 )
 
 // Screen identifies which screen is currently active.

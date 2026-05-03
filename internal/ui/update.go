@@ -3,9 +3,9 @@ package ui
 import (
 	"time"
 
-	tea "github.com/charmbracelet/bubbletea"
 	"github.com/12jihan/afk-x/internal/engine"
 	"github.com/12jihan/afk-x/internal/ui/styles"
+	tea "github.com/charmbracelet/bubbletea"
 )
 
 // Update routes all Bubbletea messages and returns the updated model plus any

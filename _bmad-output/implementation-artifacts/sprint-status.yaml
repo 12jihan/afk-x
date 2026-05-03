@@ -1,5 +1,5 @@
 # generated: 2026-05-02
-# last_updated: 2026-05-03
+# last_updated: 2026-05-02
 # project: afk-x
 # project_key: NOKEY
 # tracking_system: file-system
@@ -35,7 +35,7 @@
 # - Dev moves story to 'review', then runs code-review (fresh context, different LLM recommended)
 
 generated: 2026-05-02
-last_updated: 2026-05-03
+last_updated: 2026-05-02
 project: afk-x
 project_key: NOKEY
 tracking_system: file-system
@@ -46,7 +46,7 @@ development_status:
   epic-1: in-progress
   1-1-project-scaffold-build-pipeline: review
   1-2-game-state-schema: done
-  1-3-content-package-resource-narrative-definitions: backlog
+  1-3-content-package-resource-narrative-definitions: done
   1-4-resource-tick-engine: backlog
   1-5-tui-shell-boot-sequence-resource-display: backlog
   epic-1-retrospective: optional

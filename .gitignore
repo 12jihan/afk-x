@@ -1,0 +1,38 @@
+# Binaries
+bin/
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Go build artifacts
+*.o
+*.a
+
+# Go test artifacts
+*.test
+
+# Go coverage
+coverage.out
+coverage.html
+
+# Vendor directory
+vendor/
+
+# Module cache
+/go.sum.bak
+
+# OS-specific
+.DS_Store
+Thumbs.db
+
+# IDE/editor
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# GoReleaser
+dist/

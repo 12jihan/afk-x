@@ -1,6 +1,6 @@
 # Story 1.1: Project Scaffold & Build Pipeline
 
-Status: ready-for-dev
+Status: review
 
 ## Story
 
@@ -17,65 +17,65 @@ so that all subsequent development has a clean, reproducible foundation.
 
 ## Tasks / Subtasks
 
-- [ ] Task 1: Initialize Go module and install dependencies (AC: 1, 2)
-  - [ ] Run `go mod init github.com/<username>/afk-x` (use a reasonable module path)
-  - [ ] Run `go get github.com/charmbracelet/bubbletea@v1.3.10`
-  - [ ] Run `go get github.com/charmbracelet/bubbles@v2.0.0`
-  - [ ] Run `go get github.com/charmbracelet/lipgloss@v1.1.0`
-  - [ ] Verify `go.mod` and `go.sum` are generated correctly
+- [x] Task 1: Initialize Go module and install dependencies (AC: 1, 2)
+  - [x] Run `go mod init github.com/<username>/afk-x` (use a reasonable module path)
+  - [x] Run `go get github.com/charmbracelet/bubbletea@v1.3.10`
+  - [x] Run `go get github.com/charmbracelet/bubbles@v2.0.0`
+  - [x] Run `go get github.com/charmbracelet/lipgloss@v1.1.0`
+  - [x] Verify `go.mod` and `go.sum` are generated correctly
 
-- [ ] Task 2: Create full project directory structure (AC: 1)
-  - [ ] Create `cmd/afk-x/` directory
-  - [ ] Create `internal/game/` directory
-  - [ ] Create `internal/content/` directory
-  - [ ] Create `internal/engine/` directory
-  - [ ] Create `internal/combat/` directory
-  - [ ] Create `internal/save/` directory
-  - [ ] Create `internal/ui/` directory
-  - [ ] Create `internal/ui/screens/` directory
-  - [ ] Create `internal/ui/styles/` directory
-  - [ ] Add `.gitignore` (standard Go .gitignore: bin/, vendor/, *.exe, etc.)
+- [x] Task 2: Create full project directory structure (AC: 1)
+  - [x] Create `cmd/afk-x/` directory
+  - [x] Create `internal/game/` directory
+  - [x] Create `internal/content/` directory
+  - [x] Create `internal/engine/` directory
+  - [x] Create `internal/combat/` directory
+  - [x] Create `internal/save/` directory
+  - [x] Create `internal/ui/` directory
+  - [x] Create `internal/ui/screens/` directory
+  - [x] Create `internal/ui/styles/` directory
+  - [x] Add `.gitignore` (standard Go .gitignore: bin/, vendor/, *.exe, etc.)
 
-- [ ] Task 3: Create minimal `cmd/afk-x/main.go` entry point (AC: 1, 3)
-  - [ ] Parse `--version` flag using standard `flag` package
-  - [ ] If `--version`: print version string (hardcode `"0.1.0-dev"` initially) and `os.Exit(0)`
-  - [ ] Default (no flags): print "afk-x: TUI not yet initialized" and exit cleanly (placeholder until Story 1.5)
-  - [ ] Ensure binary exits with code 0 for all valid paths
+- [x] Task 3: Create minimal `cmd/afk-x/main.go` entry point (AC: 1, 3)
+  - [x] Parse `--version` flag using standard `flag` package
+  - [x] If `--version`: print version string (hardcode `"0.1.0-dev"` initially) and `os.Exit(0)`
+  - [x] Default (no flags): print "afk-x: TUI not yet initialized" and exit cleanly (placeholder until Story 1.5)
+  - [x] Ensure binary exits with code 0 for all valid paths
 
-- [ ] Task 4: Create stub package files so `go build ./...` succeeds (AC: 1, 2)
-  - [ ] `internal/game/state.go` — package declaration + TODO comment (Story 1.2 will implement)
-  - [ ] `internal/content/content.go` — package declaration + TODO comment (Story 1.3 will implement)
-  - [ ] `internal/engine/engine.go` — package declaration + TODO comment (Story 1.4 will implement)
-  - [ ] `internal/combat/combat.go` — package declaration + TODO comment
-  - [ ] `internal/save/save.go` — package declaration + TODO comment
-  - [ ] `internal/ui/ui.go` — package declaration + TODO comment
-  - [ ] All stub files must compile without errors
+- [x] Task 4: Create stub package files so `go build ./...` succeeds (AC: 1, 2)
+  - [x] `internal/game/state.go` — package declaration + TODO comment (Story 1.2 will implement)
+  - [x] `internal/content/content.go` — package declaration + TODO comment (Story 1.3 will implement)
+  - [x] `internal/engine/engine.go` — package declaration + TODO comment (Story 1.4 will implement)
+  - [x] `internal/combat/combat.go` — package declaration + TODO comment
+  - [x] `internal/save/save.go` — package declaration + TODO comment
+  - [x] `internal/ui/ui.go` — package declaration + TODO comment
+  - [x] All stub files must compile without errors
 
-- [ ] Task 5: Create Makefile (AC: 1, 2)
-  - [ ] `build` target: `go build -o bin/afk-x ./cmd/afk-x`
-  - [ ] `test` target: `go test ./...`
-  - [ ] `lint` target: `go vet ./...`
-  - [ ] `release` target: `goreleaser release --clean`
-  - [ ] `clean` target: `rm -rf bin/`
-  - [ ] Default target should be `build`
+- [x] Task 5: Create Makefile (AC: 1, 2)
+  - [x] `build` target: `go build -o bin/afk-x ./cmd/afk-x`
+  - [x] `test` target: `go test ./...`
+  - [x] `lint` target: `go vet ./...`
+  - [x] `release` target: `goreleaser release --clean`
+  - [x] `clean` target: `rm -rf bin/`
+  - [x] Default target should be `build`
 
-- [ ] Task 6: Create GitHub Actions CI workflow (AC: 2)
-  - [ ] Create `.github/workflows/ci.yml`
-  - [ ] Trigger: `push` to `main` and `pull_request` to `main`
-  - [ ] Steps: checkout, setup-go (Go 1.21+), `go test ./...`, `go vet ./...`
-  - [ ] Use `actions/checkout@v4` and `actions/setup-go@v5`
+- [x] Task 6: Create GitHub Actions CI workflow (AC: 2)
+  - [x] Create `.github/workflows/ci.yml`
+  - [x] Trigger: `push` to `main` and `pull_request` to `main`
+  - [x] Steps: checkout, setup-go (Go 1.21+), `go test ./...`, `go vet ./...`
+  - [x] Use `actions/checkout@v4` and `actions/setup-go@v5`
 
-- [ ] Task 7: Create GoReleaser configuration (AC: 4)
-  - [ ] Create `.goreleaser.yml` at project root
-  - [ ] Configure builds for: `linux/amd64`, `linux/arm64`, `macos/amd64`, `macos/arm64`
-  - [ ] Set `ldflags: ["-s", "-w"]` for binary size optimization (NFR15: ≤20MB)
-  - [ ] Set binary name to `afk-x`
-  - [ ] Run `goreleaser check` to validate (no actual release)
+- [x] Task 7: Create GoReleaser configuration (AC: 4)
+  - [x] Create `.goreleaser.yml` at project root
+  - [x] Configure builds for: `linux/amd64`, `linux/arm64`, `macos/amd64`, `macos/arm64`
+  - [x] Set `ldflags: ["-s", "-w"]` for binary size optimization (NFR15: ≤20MB)
+  - [x] Set binary name to `afk-x`
+  - [x] Run `goreleaser check` to validate (no actual release)
 
-- [ ] Task 8: Write minimal test to satisfy CI (AC: 2)
-  - [ ] Create `cmd/afk-x/main_test.go` with at least one passing test
-  - [ ] Test can be a simple smoke test: verify `go test ./...` passes with non-zero test count
-  - [ ] Run `go test ./...` locally to confirm
+- [x] Task 8: Write minimal test to satisfy CI (AC: 2)
+  - [x] Create `cmd/afk-x/main_test.go` with at least one passing test
+  - [x] Test can be a simple smoke test: verify `go test ./...` passes with non-zero test count
+  - [x] Run `go test ./...` locally to confirm
 
 ## Dev Notes
 
@@ -286,10 +286,34 @@ claude-sonnet-4-6
 
 ### Debug Log References
 
+- Fixed deprecated `archives.format` in `.goreleaser.yml` → replaced with `archives.formats` array (GoReleaser v2 requirement)
+
 ### Completion Notes List
 
-- Ultimate context engine analysis completed - comprehensive developer guide created
+- All tasks were pre-implemented in a prior session; only Task 8 (`main_test.go`) and the GoReleaser deprecation fix were outstanding
+- Added `cmd/afk-x/main_test.go` with `TestVersionString` smoke test — confirms non-empty version string
+- Fixed `.goreleaser.yml`: replaced deprecated `format: tar.gz` with `formats: [tar.gz]`
+- All 4 ACs verified: `make build` → `bin/afk-x` exits 0; `go test ./...` + `go vet ./...` pass; `--version` prints version; `goreleaser check` passes clean
 
 ### File List
 
-(populate when story is implemented)
+- `.gitignore`
+- `.github/workflows/ci.yml`
+- `.goreleaser.yml`
+- `Makefile`
+- `go.mod`
+- `go.sum`
+- `cmd/afk-x/main.go`
+- `cmd/afk-x/main_test.go`
+- `internal/combat/combat.go`
+- `internal/content/content.go`
+- `internal/engine/engine.go`
+- `internal/game/state.go`
+- `internal/save/save.go`
+- `internal/ui/ui.go`
+- `internal/ui/screens/.gitkeep`
+- `internal/ui/styles/.gitkeep`
+
+### Change Log
+
+- 2026-05-02: Story 1.1 complete — project scaffold, build pipeline, CI, GoReleaser config, and test suite all verified passing

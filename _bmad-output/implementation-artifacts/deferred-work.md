@@ -1,5 +1,13 @@
 # Deferred Work
 
+## Deferred from: code review of 1-4-resource-tick-engine (2026-05-03)
+
+- `content.BaseRates` mutable `var` with no write guard — `ComputeRates` defensive copy prevents engine-side corruption but any package can still write `content.BaseRates[key] = X` directly; making BaseRates an accessor function would be a real fix [internal/content/resources.go]
+- `ComputeRates` `run game.RunState` parameter currently unused — intentional placeholder for Story 2.x upgrade multipliers and Story 3.x perk bonuses [internal/engine/rates.go:16]
+- Float accumulation drift over many ticks — `float64` addition over thousands of 16ms ticks is non-associative; acceptable for idle game session lengths but worth revisiting for save/load equality comparisons [internal/engine/tick.go]
+- No test verifies `TickMsg` type delivered by `TickCmd` — AC4 requires `TickMsg` delivery but the cmd callback type is only testable by running a Bubbletea event loop; defer to Story 1.5 integration testing [internal/engine/tick_test.go]
+- `engine.go` doc "no global mutable state" is technically overstated — `ComputeRates` reads `content.BaseRates`, a mutable package-level var; doc should be updated to acknowledge this once BaseRates immutability is addressed [internal/engine/engine.go:2]
+
 ## Deferred from: code review of 1-3-content-package-resource-narrative-definitions (2026-05-03)
 
 - `BaseRates` external mutation risk — any importer can write `content.BaseRates[key] = X` and corrupt the baseline; Story 1.4 `ComputeRates()` must copy the map rather than reference it directly [internal/content/resources.go:14]

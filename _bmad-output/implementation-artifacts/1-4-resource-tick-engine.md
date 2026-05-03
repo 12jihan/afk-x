@@ -1,6 +1,6 @@
 # Story 1.4: Resource Tick Engine
 
-Status: review
+Status: done
 
 ## Story
 
@@ -49,6 +49,21 @@ so that the game progresses without requiring my attention.
 - [x] Task 6: Verify full test suite passes (AC: all)
   - [x] `go test ./internal/engine/...` — 8 tests pass
   - [x] `go test ./...` — no regressions
+
+### Review Findings
+
+- [x] [Review][Patch] `TestTickAppliesRates` tautological — `want` computed with same formula as prod code; add hardcoded oracle (rate=1.0, delta=16ms → want=0.016) [tick_test.go:43]
+- [x] [Review][Patch] `TestComputeRatesReturnsCopy` baseline snapshot captured after `ComputeRates` call — move before call to make assertion non-vacuous [rates_test.go:50]
+- [x] [Review][Patch] `TestComputeRatesDefaultState` missing reverse len check — add `len(rates) == len(content.BaseRates)` to catch spurious extra keys [rates_test.go:17]
+- [x] [Review][Patch] `TestTickDeterministic` only checks rate-tracked keys — add assertion that non-rate resource keys are preserved unchanged [tick_test.go:52]
+- [x] [Review][Patch] Export `TickInterval = 16*time.Millisecond` constant — remove duplicated magic number from tick.go and tick_test.go [tick.go:18]
+- [x] [Review][Patch] `Tick` godoc missing key behavioral notes — document nil Resources, rates-only key creation (zero-base), and negative-delta precondition [tick.go:27]
+- [x] [Review][Patch] Missing `TestTickPreservesUnratedKeys` — no test verifies that keys present in state.Resources but absent from rates are preserved unchanged [tick_test.go]
+- [x] [Review][Defer] `content.BaseRates` mutable `var` with no write guard [content/resources.go] — deferred, pre-existing (Story 1.3 domain)
+- [x] [Review][Defer] `ComputeRates` `run` parameter unused — intentional Story 2.x/3.x placeholder [rates.go:16] — deferred, pre-existing
+- [x] [Review][Defer] Float accumulation drift over many ticks — known float64 limitation, acceptable for idle game [tick.go] — deferred, acceptable
+- [x] [Review][Defer] No test verifies `TickMsg` type delivered by `TickCmd` — impractical without running Bubbletea event loop [tick_test.go] — deferred, impractical
+- [x] [Review][Defer] `engine.go` doc "no global mutable state" overstated — reads mutable `content.BaseRates` [engine.go:2] — deferred, pre-existing (BaseRates immutability)
 
 ## Dev Notes
 

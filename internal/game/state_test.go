@@ -6,6 +6,7 @@ import (
 	"testing"
 	"time"
 
+	"github.com/12jihan/afk-x/internal/content"
 	"github.com/12jihan/afk-x/internal/game"
 )
 
@@ -74,8 +75,8 @@ func TestAllFieldsSnakeCase(t *testing.T) {
 func TestJSONRoundTrip(t *testing.T) {
 	original := NewGameState()
 	original.Run.Floor = 5
-	original.Run.Resources["cpu_cycles"] = 1250.5
-	original.Run.Resources["memory_shards"] = 340.0
+	original.Run.Resources[content.CPUCycles] = 1250.5
+	original.Run.Resources[content.MemoryShards] = 340.0
 	original.Run.Upgrades["cycle_boost_1"] = 2
 	original.Run.ActivePerks = []string{"overclock"}
 	original.Run.ComboQueue = [][]string{{"scan", "exploit", "loot"}}
@@ -276,9 +277,9 @@ func TestNilSlicesSerializeAsNull(t *testing.T) {
 func TestResourcesMapType(t *testing.T) {
 	state := NewGameState()
 
-	state.Run.Resources["cpu_cycles"] = 100.5
-	state.Run.Resources["memory_shards"] = 50.0
-	state.Run.Resources["process_threads"] = 10.25
+	state.Run.Resources[content.CPUCycles] = 100.5
+	state.Run.Resources[content.MemoryShards] = 50.0
+	state.Run.Resources[content.ProcessThreads] = 10.25
 
 	data, err := json.Marshal(state.Run)
 	if err != nil {
@@ -291,9 +292,9 @@ func TestResourcesMapType(t *testing.T) {
 	}
 
 	cases := map[string]float64{
-		"cpu_cycles":      100.5,
-		"memory_shards":   50.0,
-		"process_threads": 10.25,
+		content.CPUCycles:      100.5,
+		content.MemoryShards:   50.0,
+		content.ProcessThreads: 10.25,
 	}
 	for key, want := range cases {
 		if got := restored.Resources[key]; got != want {

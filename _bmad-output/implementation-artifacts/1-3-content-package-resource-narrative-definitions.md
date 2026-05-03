@@ -1,6 +1,6 @@
 # Story 1.3: Content Package — Resource & Narrative Definitions
 
-Status: review
+Status: done
 
 ## Story
 
@@ -42,6 +42,22 @@ so that all other packages reference game content without magic strings.
 - [x] Task 5: Resolve deferred item from Story 1.2 (AC: 4, regression check)
   - [x] Update `internal/game/state_test.go` to import `content` and replace string literals `"cpu_cycles"`, `"memory_shards"`, `"process_threads"` with `content.CPUCycles`, `content.MemoryShards`, `content.ProcessThreads`
   - [x] Run `go test ./...` to confirm no regressions
+
+### Senior Developer Review (AI)
+
+**Review Date:** 2026-05-03
+**Outcome:** Changes Requested
+**Layers:** Blind Hunter, Edge Case Hunter, Acceptance Auditor
+
+#### Action Items
+
+- [x] [Review][Patch] `TestMilestoneTextsAreDistinct` overwrites `seen[text]` after collision — third duplicate would report wrong origin floor [internal/content/content_test.go:106]
+- [x] [Review][Patch] `milestoneTexts` var lacks "treat as read-only" comment — inconsistent with `BaseRates` documentation pattern [internal/content/narrative.go:19]
+- [x] [Review][Defer] `BaseRates` external mutation risk — any importer can corrupt the baseline; mitigation belongs in Story 1.4 (`ComputeRates` must copy the map, not reference directly) [internal/content/resources.go:14] — deferred, pre-existing
+- [x] [Review][Defer] `TestMilestoneTextForMilestoneFloors` hard-codes milestone floor list — must be manually updated if milestones change; by design for now [internal/content/content_test.go:87] — deferred, pre-existing
+- [x] [Review][Defer] `TestMilestoneTextEmptyForNonMilestone` doesn't cover floor 0 or negative values — behavior is correct but contract is undocumented [internal/content/content_test.go:97] — deferred, pre-existing
+- [x] [Review][Defer] `TestBaseRatesDefined`/`TestResourceKeysMatchBaseRates` don't assert `len(BaseRates) == 3` — no extra-key invariant enforced [internal/content/content_test.go:49–74] — deferred, pre-existing
+- [x] [Review][Defer] `BaseRates`-to-engine integration test missing — belongs in Story 1.4 when `engine/rates.go` is implemented — deferred, pre-existing
 
 ## Dev Notes
 

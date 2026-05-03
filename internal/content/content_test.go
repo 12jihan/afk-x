@@ -111,7 +111,8 @@ func TestMilestoneTextsAreDistinct(t *testing.T) {
 		text := content.MilestoneText(floor)
 		if prev, dup := seen[text]; dup {
 			t.Errorf("MilestoneText(%d) == MilestoneText(%d) — texts are not distinct", floor, prev)
+		} else {
+			seen[text] = floor
 		}
-		seen[text] = floor
 	}
 }

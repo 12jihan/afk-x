@@ -16,6 +16,7 @@ const BootText = `SYSTEM INITIALIZE — THE TOWER
 
 // milestoneTexts maps milestone floor numbers to their flavor text (FR35).
 // Non-milestone floors are absent from this map — MilestoneText returns "" for them.
+// Treat as read-only — MilestoneText is the sole access point; never mutate this map.
 var milestoneTexts = map[int]string{
 	5: `SECTOR 0x05 CLEARED
 The daemon cluster on this floor was running a single process,

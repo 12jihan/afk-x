@@ -1,5 +1,13 @@
 # Deferred Work
 
+## Deferred from: code review of 1-3-content-package-resource-narrative-definitions (2026-05-03)
+
+- `BaseRates` external mutation risk — any importer can write `content.BaseRates[key] = X` and corrupt the baseline; Story 1.4 `ComputeRates()` must copy the map rather than reference it directly [internal/content/resources.go:14]
+- `TestMilestoneTextForMilestoneFloors` hard-codes the milestone floor list `{5, 10, 20, 25}` — must be manually updated if milestone set changes in a future story [internal/content/content_test.go:87]
+- `TestMilestoneTextEmptyForNonMilestone` doesn't exercise floor 0 or negative values — behavior is correct (missing key returns "") but the contract is undocumented in tests [internal/content/content_test.go:97]
+- `TestBaseRatesDefined`/`TestResourceKeysMatchBaseRates` don't assert `len(content.BaseRates) == 3` — no enforcement that BaseRates has no extra unknown keys [internal/content/content_test.go:49–74]
+- `BaseRates`-to-engine integration test missing — no test asserts that a fresh run's computed rates equal BaseRates values; belongs in Story 1.4 when `engine/rates.go` is written
+
 ## Deferred from: code review of 1-2-game-state-schema (2026-05-03)
 
 - Use `content` package resource key constants in `TestResourcesMapType` and `TestJSONRoundTrip` instead of string literals — blocked until Story 1.3 defines the constants in `content/resources.go`

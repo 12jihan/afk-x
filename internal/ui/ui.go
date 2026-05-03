@@ -1,2 +1,3 @@
-// Package ui implements the Bubbletea TUI model, screen management, and view rendering for afk-x.
+// Package ui provides the TUI application model and screen management.
+// TODO: Implemented in Story 1.5
 package ui

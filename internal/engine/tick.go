@@ -3,8 +3,8 @@ package engine
 import (
 	"time"
 
-	"github.com/12jihan/afk-x/internal/game"
 	tea "github.com/charmbracelet/bubbletea"
+	"github.com/12jihan/afk-x/internal/game"
 )
 
 // TickInterval is the target duration between game ticks (~62.5 Hz).

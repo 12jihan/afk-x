@@ -14,3 +14,10 @@ clean:
 
 release:
 	goreleaser release --clean
+
+run: build
+ifeq ($(shell uname),Darwin)
+	script -q /dev/null ./afk-x
+else
+	script -q -c "./afk-x" /dev/null
+endif

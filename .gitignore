@@ -1,5 +1,6 @@
 # Binaries
 bin/
+/afk-x
 *.exe
 *.exe~
 *.dll
@@ -30,6 +31,7 @@ Thumbs.db
 # IDE/editor
 .idea/
 .vscode/
+.claude/settings.local.json
 *.swp
 *.swo
 *~

@@ -17,7 +17,7 @@ release:
 
 run: build
 ifeq ($(shell uname),Darwin)
-	script -q /dev/null ./afk-x
+	script -q /dev/null ./bin/afk-x
 else
-	script -q -c "./afk-x" /dev/null
+	script -q -c "./bin/afk-x" /dev/null
 endif

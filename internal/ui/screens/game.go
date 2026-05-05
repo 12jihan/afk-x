@@ -28,9 +28,19 @@ var resourceShortLabels = map[string]string{
 	content.ProcessThreads: "THR",
 }
 
-// GameView renders the main game screen: resource panel, upgrade panel, optional
-// status message, and a floor/run footer with key hints.
-func GameView(resources map[string]float64, rates engine.ResourceRates, upgrades map[string]int, statusMsg string, width, height int) string {
+// GameView renders the main game screen: resource panel, floor progress panel,
+// upgrade panel, optional status message, and a footer with key hints.
+func GameView(
+	resources map[string]float64,
+	rates engine.ResourceRates,
+	upgrades map[string]int,
+	floor int,
+	runNumber int,
+	floorProgress float64,
+	enemies []content.EnemyDefinition,
+	statusMsg string,
+	width, height int,
+) string {
 	if width == 0 || height == 0 {
 		return ""
 	}
@@ -41,18 +51,49 @@ func GameView(resources map[string]float64, rates engine.ResourceRates, upgrades
 	}
 	resourcePanel := styles.ResourcePanel(width).Render(strings.Join(resourceRows, "\n"))
 
+	floorPanel := FloorView(floor, floorProgress, enemies, width)
 	upgradePanel := upgradeView(upgrades, resources, width)
 
 	footer := lipgloss.NewStyle().Foreground(styles.Muted).
-		Render("Floor: 1  Run: 1   [1-3] buy upgrade  [q] quit")
+		Render(fmt.Sprintf("Floor: %d  Run: %d   [1-3] buy upgrade  [q] quit", floor, runNumber))
 
-	parts := []string{resourcePanel, upgradePanel}
+	parts := []string{resourcePanel, floorPanel, upgradePanel}
 	if statusMsg != "" {
 		parts = append(parts, lipgloss.NewStyle().Foreground(styles.Normal).Render(statusMsg))
 	}
 	parts = append(parts, footer)
 
 	return strings.Join(parts, "\n")
+}
+
+// FloorView renders the floor progress panel: a progress bar and active daemon enemy list.
+func FloorView(floor int, progress float64, enemies []content.EnemyDefinition, width int) string {
+	bar := progressBar(progress, 24)
+	pct := int(progress * 100)
+	header := fmt.Sprintf("FLOOR %02d  %s %d%%", floor, bar, pct)
+
+	var enemyNames []string
+	for _, e := range enemies {
+		enemyNames = append(enemyNames, fmt.Sprintf("%s [%s]", e.Name, e.Type))
+	}
+	var enemyLine string
+	if len(enemyNames) > 0 {
+		enemyLine = "Daemons: " + strings.Join(enemyNames, "  ·  ")
+	} else {
+		enemyLine = "Daemons: none"
+	}
+
+	content_ := header + "\n" + enemyLine
+	return styles.FloorPanel(width).Render(content_)
+}
+
+func progressBar(progress float64, width int) string {
+	filled := int(progress * float64(width))
+	if filled > width {
+		filled = width
+	}
+	empty := width - filled
+	return "[" + strings.Repeat("█", filled) + strings.Repeat("░", empty) + "]"
 }
 
 // upgradeView renders the upgrade panel listing all upgrades with costs and affordability.

@@ -21,6 +21,19 @@ func ResourcePanel(width int) lipgloss.Style {
 		Width(inner)
 }
 
+// FloorPanel returns a bordered panel style for the floor progress and enemy display.
+func FloorPanel(width int) lipgloss.Style {
+	inner := width - 6
+	if inner < 20 {
+		inner = 20
+	}
+	return lipgloss.NewStyle().
+		Border(lipgloss.RoundedBorder()).
+		BorderForeground(Accent).
+		Padding(1, 2).
+		Width(inner)
+}
+
 // UpgradePanel returns a bordered panel style for the upgrade list.
 func UpgradePanel(width int) lipgloss.Style {
 	inner := width - 6

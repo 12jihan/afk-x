@@ -3,6 +3,8 @@ package ui
 import (
 	"fmt"
 
+	"github.com/12jihan/afk-x/internal/content"
+	"github.com/12jihan/afk-x/internal/engine"
 	"github.com/12jihan/afk-x/internal/ui/screens"
 	"github.com/12jihan/afk-x/internal/ui/styles"
 )
@@ -19,7 +21,20 @@ func (m Model) View() string {
 	case BootScreen:
 		return screens.BootView(m.Width, m.Height)
 	case GameScreen:
-		return screens.GameView(m.State.Run.Resources, m.Rates, m.State.Run.Upgrades, m.StatusMsg, m.Width, m.Height)
+		floorProgress := engine.FloorProgress(m.State.Run)
+		enemies := content.EnemiesForFloor(m.State.Run.Floor)
+		return screens.GameView(
+			m.State.Run.Resources,
+			m.Rates,
+			m.State.Run.Upgrades,
+			m.State.Run.Floor,
+			m.State.Run.RunNumber,
+			floorProgress,
+			enemies,
+			m.StatusMsg,
+			m.Width,
+			m.Height,
+		)
 	default:
 		return ""
 	}

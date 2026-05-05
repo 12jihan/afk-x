@@ -25,6 +25,14 @@ const bootDuration = 2 * time.Second
 // bootDoneMsg is delivered by bootTimerCmd after the boot sequence timer elapses.
 type bootDoneMsg struct{}
 
+// floorClearMsg is delivered by floorClearCmd when a floor is cleared during a tick.
+type floorClearMsg struct{}
+
+// floorClearCmd fires a floorClearMsg to trigger floor advancement in Update.
+func floorClearCmd() tea.Cmd {
+	return func() tea.Msg { return floorClearMsg{} }
+}
+
 // clearStatusMsg is delivered by clearStatusAfterCmd to dismiss the status bar message.
 type clearStatusMsg struct{}
 

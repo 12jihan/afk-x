@@ -19,7 +19,7 @@ func (m Model) View() string {
 	case BootScreen:
 		return screens.BootView(m.Width, m.Height)
 	case GameScreen:
-		return screens.GameView(m.State.Run.Resources, m.Rates, m.Width, m.Height)
+		return screens.GameView(m.State.Run.Resources, m.Rates, m.State.Run.Upgrades, m.StatusMsg, m.Width, m.Height)
 	default:
 		return ""
 	}

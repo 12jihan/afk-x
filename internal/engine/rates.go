@@ -10,7 +10,7 @@ import (
 type ResourceRates map[string]float64
 
 // ComputeRates returns the current resource generation rates for a run.
-// For MVP (no upgrades or perks active) this equals content.BaseRates.
+// Starts from content.BaseRates, then adds flat bonuses from active upgrades.
 // Returns a defensive copy — callers may mutate the result safely without
 // affecting content.BaseRates (resolves Story 1.3 deferred: BaseRates mutation risk).
 func ComputeRates(run game.RunState) ResourceRates {
@@ -18,7 +18,18 @@ func ComputeRates(run game.RunState) ResourceRates {
 	for k, v := range content.BaseRates {
 		rates[k] = v
 	}
-	// TODO: Story 2.x — apply upgrade multipliers from run.Upgrades
+	for id, level := range run.Upgrades {
+		if level == 0 {
+			continue
+		}
+		def, ok := content.UpgradeByID(id)
+		if !ok {
+			continue
+		}
+		if def.BonusType == "rate_add" {
+			rates[def.BonusTarget] += def.BonusValue * float64(level)
+		}
+	}
 	// TODO: Story 3.x — apply active perk bonuses from run.ActivePerks
 	return rates
 }

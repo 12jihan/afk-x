@@ -25,6 +25,17 @@ const bootDuration = 2 * time.Second
 // bootDoneMsg is delivered by bootTimerCmd after the boot sequence timer elapses.
 type bootDoneMsg struct{}
 
+// clearStatusMsg is delivered by clearStatusAfterCmd to dismiss the status bar message.
+type clearStatusMsg struct{}
+
+// clearStatusAfterCmd schedules a clearStatusMsg after duration d.
+func clearStatusAfterCmd(d time.Duration) tea.Cmd {
+	return func() tea.Msg {
+		time.Sleep(d)
+		return clearStatusMsg{}
+	}
+}
+
 func bootTimerCmd() tea.Cmd {
 	return func() tea.Msg {
 		time.Sleep(bootDuration)
@@ -42,6 +53,7 @@ type Model struct {
 	ShowCmdRef bool
 	Width      int
 	Height     int
+	StatusMsg  string
 	tooSmall   bool
 }
 

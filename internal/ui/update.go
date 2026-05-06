@@ -3,6 +3,7 @@ package ui
 import (
 	"time"
 
+	"github.com/12jihan/afk-x/internal/content"
 	"github.com/12jihan/afk-x/internal/engine"
 	"github.com/12jihan/afk-x/internal/ui/styles"
 	tea "github.com/charmbracelet/bubbletea"
@@ -35,6 +36,9 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		m.State.Run = engine.Tick(m.State.Run, delta, m.Rates)
 		return m, engine.TickCmd()
 
+	case clearStatusMsg:
+		m.StatusMsg = ""
+
 	case tea.KeyMsg:
 		if m.Screen == BootScreen {
 			m.LastTick = time.Now()
@@ -44,6 +48,21 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		switch msg.String() {
 		case "q", "ctrl+c":
 			return m, tea.Quit
+		case "1", "2", "3":
+			if m.Screen == GameScreen {
+				idx := int(msg.String()[0] - '1')
+				if idx >= 0 && idx < len(content.Upgrades) {
+					def := content.Upgrades[idx]
+					updated, ok := engine.PurchaseUpgrade(m.State.Run, def.ID)
+					if ok {
+						m.State.Run = updated
+						m.StatusMsg = "Purchased: " + def.Name
+					} else {
+						m.StatusMsg = "Insufficient resources for " + def.Name
+					}
+					return m, clearStatusAfterCmd(2 * time.Second)
+				}
+			}
 		}
 	}
 

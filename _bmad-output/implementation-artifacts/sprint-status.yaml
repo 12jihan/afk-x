@@ -54,7 +54,7 @@ development_status:
   # ─── Epic 2: Core Idle Loop ────────────────────────────────────────────────
   epic-2: in-progress
   2-1-upgrade-definitions-purchase-system: done
-  2-2-floor-progression-daemon-encounters: backlog
+  2-2-floor-progression-daemon-encounters: review
   2-3-milestone-flavor-text: backlog
   epic-2-retrospective: optional
 

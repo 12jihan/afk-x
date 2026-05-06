@@ -1,6 +1,7 @@
 package ui
 
 import (
+	"fmt"
 	"time"
 
 	"github.com/12jihan/afk-x/internal/content"
@@ -34,7 +35,16 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		m.LastTick = now
 		m.Rates = engine.ComputeRates(m.State.Run)
 		m.State.Run = engine.Tick(m.State.Run, delta, m.Rates)
+		if engine.CheckFloorClear(m.State.Run) {
+			return m, tea.Batch(engine.TickCmd(), floorClearCmd())
+		}
 		return m, engine.TickCmd()
+
+	case floorClearMsg:
+		prevFloor := m.State.Run.Floor
+		m.State.Run = engine.AdvanceFloor(m.State.Run)
+		m.StatusMsg = fmt.Sprintf("Floor %d cleared!", prevFloor)
+		return m, clearStatusAfterCmd(3 * time.Second)
 
 	case clearStatusMsg:
 		m.StatusMsg = ""
